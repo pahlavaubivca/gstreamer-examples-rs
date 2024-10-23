@@ -4,3 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+gstreamer="0.23.2"
+gstreamer-app="0.23.2"
+anyhow="1.0.91"
