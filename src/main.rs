@@ -9,12 +9,13 @@ use gstreamer::glib::GString;
 use gstreamer::glib::translate::FromGlibPtrNone;
 use gstreamer_app::{gst, AppSink};
 use crate::examples::create_element::create_element_example;
+use crate::examples::dynamic_pipelines::DynamicPipelines;
 use crate::examples::play_video_by_http::play_video_by_http;
 
 fn main() {
     gst::init().unwrap();
     // play_video_by_http();
-    create_element_example();
-
+    // create_element_example();
+    DynamicPipelines::new().run();
     
 }

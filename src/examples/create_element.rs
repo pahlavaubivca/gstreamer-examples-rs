@@ -4,25 +4,28 @@ use gstreamer::prelude::{ElementExt, GObjectExtManualGst, GstBinExtManual, GstOb
 use gstreamer_app::gst;
 
 pub fn create_element_example() {
+    /// videotestsrc its element for producing test video data in a variety of formats. Its not a real video source, but rather generates a test pattern.
     let source = gst::ElementFactory::make("videotestsrc").build().unwrap();
+    let blender = gst::ElementFactory::make("vertigotv").build().unwrap();
+    let videoconvert = gst::ElementFactory::make("videoconvert").build().unwrap();
     let sink = gst::ElementFactory::make("autovideosink").build().unwrap();
     let pipeline = gst::Pipeline::with_name("test-pipeline");
 
     let bin_many = gst::Bin::add_many(
         (&pipeline).as_ref(),
-        [&source, &sink],
+        [&source, &blender, &videoconvert,&sink],
     );
     if let Err(err) = bin_many {
         eprintln!("Failed to add elements to bin: {}", err);
         panic!("Failed to add elements to bin");
     }
 
-    if let Err(err) = gst::Element::link_many(&[&source, &sink]) {
+    if let Err(err) = gst::Element::link_many(&[&source, &blender,&videoconvert, &sink]) {
         eprintln!("Failed to link elements: {}", err);
         pipeline.set_state(gst::State::Null).unwrap();
         panic!("Failed to link elements");
     }
-    
+
     // let prop_list = source.list_properties();
     // for prop in prop_list {
     //     println!("Property: {:?}", prop.name());
@@ -30,15 +33,16 @@ pub fn create_element_example() {
     //     
     // }
     // 
-    let prop_sink_list = sink.list_properties();
-    for prop in prop_sink_list {
-        println!("Property: {:?}", prop.name());
-        println!("Value type: {:?}", prop.value_type());
-        
-    }
-    
-    
+    // let prop_sink_list = sink.list_properties();
+    // for prop in prop_sink_list {
+    //     println!("Property: {:?}", prop.name());
+    //     println!("Value type: {:?}", prop.value_type());
+    //     
+    // }
+
+
     source.set_property_from_str("pattern", "smpte");
+    // source.set_property_from_str("pattern", "snow");
     // GstVideoTestSrcPattern
     // 
     // source.set_property("pattern", VideoTestSrcPattern"smpte");
