@@ -3,7 +3,7 @@ use gstreamer::glib::property::PropertySet;
 use gstreamer::prelude::{ElementExt, GObjectExtManualGst, GstBinExtManual, GstObjectExt, ObjectExt};
 use gstreamer_app::gst;
 
-pub fn create_element_example() {
+pub fn bt2_concepts() {
     /// videotestsrc its element for producing test video data in a variety of formats. Its not a real video source, but rather generates a test pattern.
     let source = gst::ElementFactory::make("videotestsrc").build().unwrap();
     let blender = gst::ElementFactory::make("vertigotv").build().unwrap();

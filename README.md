@@ -1,7 +1,4 @@
-# Setup
+# About
 
-# Run
+Rust adaptation for some GStreamer [examples](https://gstreamer.freedesktop.org/documentation/tutorials/basic/index.html?gi-language=c)
 
-```bash
-sudo gst-launch-1.0 --gst-plugin-path=/usr/lib/gstoct640usrc oct640usrc serial=23010000 ! videoconvert ! xvimagesink sync=false
-```

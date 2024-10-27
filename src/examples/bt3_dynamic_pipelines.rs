@@ -1,9 +1,9 @@
 use std::sync::Arc;
 use gstreamer::{Element, ElementFactory, Pad, Pipeline};
-use gstreamer::prelude::{ ElementExt, GstBinExtManual, GstObjectExt, ObjectExt, PadExt};
+use gstreamer::prelude::{ElementExt, GstBinExtManual, GstObjectExt, ObjectExt, PadExt};
 use gstreamer_app::gst;
 
-pub struct DynamicPipelines {
+pub struct BT3DynamicPipelines {
     pipeline: Pipeline,
     source: Element,
     video_converter: Arc<Element>,
@@ -13,7 +13,7 @@ pub struct DynamicPipelines {
     audio_sink: Element,
 }
 
-impl DynamicPipelines {
+impl BT3DynamicPipelines {
     pub fn new() -> Self {
         let pipeline = gst::Pipeline::with_name("my_dynamic_pipeline");
         let source = ElementFactory::make("uridecodebin").build().unwrap();
@@ -41,7 +41,7 @@ impl DynamicPipelines {
             pipeline.set_state(gst::State::Null).unwrap();
             panic!("Failed to link elements");
         }
-        
+
         if let Err(err) = Element::link_many(&[
             &video_converter,
             &video_sink
@@ -109,7 +109,6 @@ impl DynamicPipelines {
     }
 }
 
-// fn pad_added_handler(source: &Element, new_pad: &Pad, data: &DynamicPipelines) {
 fn pad_added_handler(source: &Element, new_pad: &Pad, audio_converter: &Element, video_converter: &Element) {
     let audio_sink_pad = audio_converter.static_pad("sink").unwrap();
     let video_sink_pad = video_converter.static_pad("sink").unwrap();

@@ -1,5 +1,5 @@
 [package]
-name = "btn_vision"
+name = "gstreamer-examples-rs"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,5 +8,4 @@ gstreamer="0.23.2"
 gstreamer-app="0.23.2"
 gstreamer-video="0.23.2"
 gstreamer-base = "0.23.2"
-#gst-plugin-base
 anyhow="1.0.91"
