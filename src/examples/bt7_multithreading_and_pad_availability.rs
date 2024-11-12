@@ -84,4 +84,9 @@ pub fn multithreading_and_pad_availability() {
     let queue_audio_pad = audio_queue.static_pad("sink").unwrap();
     let tee_video_pad = tee.request_pad_simple("src_%u").unwrap();
     let queue_video_pad = video_queue.static_pad("sink").unwrap();
+    if Err(err) = tee_audio_pad.link(&queue_audio_pad) {
+        eprintln!("Failed to link tee_audio_pad and queue_audio_pad: {}", err);
+        pipeline.set_state(gstreamer::State::Null).unwrap();
+        panic!("Failed to link tee_audio_pad and queue_audio_pad");
+    }
 }
