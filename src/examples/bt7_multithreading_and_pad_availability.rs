@@ -1,8 +1,16 @@
-use gstreamer::prelude::{
-    ElementExt, ElementExtManual, GstBinExtManual, GstObjectExt, ObjectExt, PadExt,
-};
+use gstreamer::prelude::{ElementExt, ElementExtManual, GObjectExtManualGst, GstBinExtManual, GstObjectExt, ObjectExt, PadExt};
 use gstreamer::{Element, ElementFactory, Pad, Pipeline};
 
+pub struct BT7MultithreadingAndPadAvailability {
+}
+impl BT7MultithreadingAndPadAvailability {
+    pub fn new() -> Self {
+        Self {}
+    }
+    pub fn run(&self) {
+        multithreading_and_pad_availability();
+    }
+}
 pub fn multithreading_and_pad_availability() {
     let audio_source =
         ElementFactory::make_with_name("audiotestsrc", Some("audio_source")).unwrap();
@@ -21,9 +29,9 @@ pub fn multithreading_and_pad_availability() {
 
     let pipeline = Pipeline::with_name("test-pipeline");
 
-    audio_source.set_property("freq", &215.0);
-    visual.set_property("shader", &0);
-    visual.set_property("style", &1);
+    audio_source.set_property("freq", 440.0);
+    visual.set_property_from_str("shader", "none");
+    visual.set_property_from_str("style", "lines");
 
     pipeline
         .add_many(&[
